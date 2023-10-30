@@ -1,32 +1,30 @@
 #!/usr/bin/python3
-""" Contains status & stats resources """
-from flask import jsonify
+"""returns a status of api"""
 from api.v1.views import app_views
+from flask import jsonify, request
 from models import storage
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
 
 
 @app_views.route('/status', methods=['GET'])
 def status():
-    """ Returns status of the API """
-    return jsonify({'status': 'OK'})
+    """returns the status of the api"""
+    if request.method == 'GET':
+        return jsonify({"status": "ok"})
 
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
-    """ Returns stats of the API """
-    return jsonify(
-        {
-            'amenities': storage.count(Amenity),
-            'cities': storage.count(City),
-            'places': storage.count(Place),
-            'reviews': storage.count(Review),
-            'states': storage.count(State),
-            'users': storage.count(User)
+    """retrieves the num of each objs based on a type"""
+    if request.method == 'GET':
+        stats = {}
+        classes = {
+            "Amenity": "amenities",
+            "City": "cities",
+            "Place": "places",
+            "Review": "reviews",
+            "State": "states",
+            "User": "users"
         }
-    )
+        for key, value in classes.items():
+            stats[value] = storage.count(key)
+        return jsonify(stats)
