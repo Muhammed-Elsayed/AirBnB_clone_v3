@@ -13,3 +13,5 @@ def get_all_amenites_objs():
     """ get amenities by id """
     all_list = [obj.to_dict() for obj in storage.all(Amenity).values()]
     return jsonify(all_list)
+
+@app_views.route('')
