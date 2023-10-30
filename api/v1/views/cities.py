@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""view for cities using rest apis"""
 
 from models import storage
 from models.state import State
