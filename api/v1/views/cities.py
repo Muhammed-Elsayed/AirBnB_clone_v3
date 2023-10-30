@@ -44,20 +44,25 @@ def delete_city_byID(city_id):
 @app_views.route('/states/<string:state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def create_obj_city(state_id):
-    """ create new instance """
+    """Create a new city instance."""
     state = storage.get(State, state_id)
+
     if state is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
 
-    js = request.get_json()
-    obj = City(**js)
-    obj.state_id = state.id
-    obj.save()
-    return jsonify(obj.to_dict()), 201
+    request_data = request.get_json()
+
+    if not request_data:
+        return jsonify({"error": "Not a JSON"}), 400
+
+    if 'name' not in request_data:
+        return jsonify({"error": "Missing name"}), 400
+
+    city_data = {'name': request_data['name'], 'state_id': state.id}
+    city = City(**city_data)
+    city.save()
+
+    return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'],
