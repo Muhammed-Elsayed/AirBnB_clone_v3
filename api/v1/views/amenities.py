@@ -6,7 +6,7 @@ View for amenities
 
 from flask import jsonify, request, abort, make_response
 from models import storage
-from models.state import Amenity
+from models.amenity import Amenity
 from api.v1.views import app_views
 
 
