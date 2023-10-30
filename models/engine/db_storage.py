@@ -59,12 +59,21 @@ class DBStorage:
         """commit all changes of the current database session"""
         self.__session.commit()
 
-    def get(self, cls, id):
+    def get1(self, cls, id):
         """retrieves one object of a given class"""
         if cls and id:
             obj = f"{cls}.{id}"
             all_objs = self.all(cls)
             return all_objs.get(obj)
+        return None
+    
+    def get(self, cls, id):
+        """ retrieves """
+        if cls in classes.values() and id and type(id) == str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
         return None
 
     def count(self, cls=None):
