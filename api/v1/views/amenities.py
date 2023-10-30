@@ -14,4 +14,3 @@ def get_all_amenites_objs():
     all_list = [obj.to_dict() for obj in storage.all(Amenity).values()]
     return jsonify(all_list)
 
-@app_views.route('')
