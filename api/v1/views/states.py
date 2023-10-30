@@ -53,3 +53,4 @@ def states_with_id(state_id=None):
             abort(400, 'Not a JSON')
         state_obj.bm_update(**req_json)
         return jsonify(state_obj.to_dict())
+
