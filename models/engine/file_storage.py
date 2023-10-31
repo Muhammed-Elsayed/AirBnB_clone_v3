@@ -48,13 +48,6 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
-    def get1(self, cls, id):
-        """retrieves one object of a given class"""
-        if cls and id:
-            obj = f"{cls}.{id}"
-            all_objs = self.all(cls)
-            return all_objs.get(obj)
-        return None
     
     def get(self, cls, id):
         """
